@@ -6,8 +6,6 @@
 //  Copyright © 2016 Christopher Simpson. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 //! Project version number for SwiftPaginator.
 FOUNDATION_EXPORT double SwiftPaginatorVersionNumber;
 

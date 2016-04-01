@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name         = "SwiftPaginator"
   s.version      = "0.0.1"
   s.summary      = "SwiftPaginator is a block based Swift class that handles pagination for you."
-  s.homepage     = "http://github.com/apocolipse/SwiftPaginator"
+  s.homepage     = "https://github.com/apocolipse/SwiftPaginator"
   s.source       = { :git => "http://github.com/apocolipse/SwiftPaginator.git", :tag => s.version }
   s.license      = { :type => "Free", :text => "Do whatever you want with this piece of code (commercially or free). Attribution would be nice though." }
   s.author             = { "Chris Simpson" => "apocolipse@gmail.com" }
