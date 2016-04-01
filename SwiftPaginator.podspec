@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftPaginator"
-  s.version      = "0.0.2"
+  s.version      = "0.0.4"
   s.summary      = "SwiftPaginator is a block based Swift class that handles pagination for you."
   s.homepage     = "https://github.com/apocolipse/SwiftPaginator"
   s.source       = { :git => "https://github.com/apocolipse/SwiftPaginator.git", :tag => s.version }
