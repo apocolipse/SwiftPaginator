@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version      = "0.0.1"
   s.summary      = "SwiftPaginator is a block based Swift class that handles pagination for you."
   s.homepage     = "https://github.com/apocolipse/SwiftPaginator"
-  s.source       = { :git => "http://github.com/apocolipse/SwiftPaginator.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/apocolipse/SwiftPaginator.git", :tag => s.version }
   s.license      = { :type => "Free", :text => "Do whatever you want with this piece of code (commercially or free). Attribution would be nice though." }
   s.author             = { "Chris Simpson" => "apocolipse@gmail.com" }
   s.social_media_url   = "http://twitter.com/apocolipse269"
@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
 
-  s.source_files  = "SwiftPaginator/*.{h,swift}"
+  s.source_files  = "SwiftPaginator/*.swift"
 end
