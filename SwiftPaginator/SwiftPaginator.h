@@ -5,7 +5,7 @@
 //  Created by Christopher Simpson on 3/31/16.
 //  Copyright © 2016 Christopher Simpson. All rights reserved.
 //
-
+#import <Foundation/Foundation.h>
 //! Project version number for SwiftPaginator.
 FOUNDATION_EXPORT double SwiftPaginatorVersionNumber;
 
