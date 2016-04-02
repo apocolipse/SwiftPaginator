@@ -18,7 +18,7 @@ Inspired by [NMPaginator](https://github.com/nmondollot/NMPaginator), an Obj-C c
 - [x] Block based, no delegate required.
 - [x] 100% Test Coverage
 - [x] Fully Documented
-- [x] iOS | OSX | WatchOS | tvOS | Linux ready
+- [x] iOS | OSX | WatchOS | tvOS | Linux ready (Foundation only used for ceil, linux not yet tested)
 
 
 
@@ -42,7 +42,7 @@ Although based on [NMPaginator](https://github.com/nmondollot/NMPaginator), Swif
 ```swift
 import SwiftPaginator
 
-let source = [["one", "two", "three", "four"]]
+let source = [["one", "two"], ["three", "four"]]
 
 let stringPaginator = Paginator<String>(pageSize: 2, fetchHandler: {
       (paginator: Paginator, page: Int, pageSize: Int) in
