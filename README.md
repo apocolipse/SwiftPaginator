@@ -51,7 +51,7 @@ $> carthage update # (bootstrap|build)
 
 ### Swift Package Manager (OS X + Linux)
 You can use [The Swift Package Manager](https://swift.org/package-manager) to
-install `SwiftyTextTable` by adding the proper description to your
+install `SwiftPaginator` by adding the proper description to your
 `Package.swift` file:
 ```swift
 import PackageDescription
