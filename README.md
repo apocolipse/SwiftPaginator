@@ -82,7 +82,18 @@ Although based on [NMPaginator](https://github.com/nmondollot/NMPaginator), Swif
 import SwiftPaginator
 
 let source = [["one", "two"], ["three", "four"]]
+```
+Simple example:
+```swift
+let stringPaginator = Paginator<String>(pageSize: 2, fetchHandler: { (paginator, page, pageSize) in
+    paginator.receivedResults(source[page], total: 4)
+}, resultsHandler: { (_, _) in
+    self.tableView.reloadData()
+})
+```
 
+A more complete example:
+```swift
 let stringPaginator = Paginator<String>(pageSize: 2, fetchHandler: {
       (paginator: Paginator, page: Int, pageSize: Int) in
 
