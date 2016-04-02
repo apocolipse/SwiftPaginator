@@ -6,7 +6,11 @@
 //  Copyright © 2016 Christopher Simpson. All rights reserved.
 //
 
-import Foundation
+#if os(Linux)
+  import Glibc
+#else
+  import Darwin
+#endif
 
 /**
  RequestStatus for Paginator
@@ -128,7 +132,7 @@ public class Paginator<Element> {
     if requestStatus == .None {
       return false
     }
-    let totalPages = ceil(Float(total) / Float(pageSize))
+    let totalPages = ceil(Double(total) / Double(pageSize))
     return page >= Int(totalPages)
   }
   
