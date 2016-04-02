@@ -3,6 +3,7 @@
 [![CocoaPods](https://img.shields.io/cocoapods/l/SwiftPaginator.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/p/SwiftPaginator.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/metrics/doc-percent/SwiftPaginator.svg)]()
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ``` 🐧 Linux Ready ```
 
 
@@ -18,18 +19,56 @@ Inspired by [NMPaginator](https://github.com/nmondollot/NMPaginator), an Obj-C c
 - [x] Block based, no delegate required.
 - [x] 100% Test Coverage
 - [x] Fully Documented
-- [x] iOS | OSX | WatchOS | tvOS | Linux ready (Foundation only used for ceil, linux not yet tested)
+- [x] iOS | OSX | WatchOS | tvOS | Linux tested & ready
+- [x] Cocoapods installable
+- [x] Carthage installable
+- [x] Swift Package Manager installable
 
 
 
 
 ## How to Install
 
-### With Cocoapods
+### Cocoapods (OS X)
 Add this to your Podfile:
 ```ruby
-pod 'SwiftPaginator'
+pod 'SwiftPaginator', '~> 1.0.0'
 ```
+and run
+```bash
+$> pod install # (or update)
+```
+
+### Carthage (OS X)
+Add this to your Cartfile
+```
+github "apocolipse/SwiftPaginator" ~> 1.0.0
+```
+and run
+```bash
+$> carthage update # (bootstrap|build)
+```
+
+### Swift Package Manager (OS X + Linux)
+You can use [The Swift Package Manager](https://swift.org/package-manager) to
+install `SwiftyTextTable` by adding the proper description to your
+`Package.swift` file:
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "YOUR_PROJECT_NAME",
+    targets: [],
+    dependencies: [
+        .Package(url: "https://github.com/apocolipse/SwiftPaginator.git", versions: "1.0.0" ..< Version.max)
+    ]
+)
+```
+
+Note that the [Swift Package Manager](https://swift.org/package-manager) is
+still in early design and development, for more infomation checkout its
+[GitHub Page](https://github.com/apple/swift-package-manager)
+
 
 ### Manually
 Copy ``SwiftPaginator.swift`` to your project
