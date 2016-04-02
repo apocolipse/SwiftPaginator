@@ -589,6 +589,7 @@
 				C67D1A631CADBD1000AD0DAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C67D1A641CADBD1000AD0DAF /* Build configuration list for PBXNativeTarget "SwiftPaginatorTests" */ = {
 			isa = XCConfigurationList;
@@ -597,6 +598,7 @@
 				C67D1A661CADBD1000AD0DAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C67D1A871CADEC6B00AD0DAF /* Build configuration list for PBXNativeTarget "SwiftPaginatorExample" */ = {
 			isa = XCConfigurationList;
@@ -605,6 +607,7 @@
 				C67D1A891CADEC6B00AD0DAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C67D1A8A1CADEC6B00AD0DAF /* Build configuration list for PBXNativeTarget "SwiftPaginatorExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -613,6 +616,7 @@
 				C67D1A8C1CADEC6B00AD0DAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
