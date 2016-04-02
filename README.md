@@ -55,10 +55,10 @@ let stringPaginator = Paginator<String>(pageSize: 2, fetchHandler: {
     })
 ```
 ### Fetch pages
-Use `fetchFirstPage()` or `fetchNextPage()` to invoke a fetch.  `fetchFirstPage()` calls `fetchNextPage()` internally if no results have yet been fetched.
+Use `fetchFirstPage()` or `fetchNextPage()` to invoke a fetch.  `fetchFirstPage()` calls `reset()` then `fetchNextPage()` internally.
 ```swift
-stringPaginator.fetchFirstPage()
-stringPaginator.fetchNextPage()
+stringPaginator.fetchNextPage()  // Use this one for most cases
+stringPaginator.fetchFirstPage() // will reset paginator
 ```
 Details on how to define fetch behavior below in `fetchHandler`
 _NOTE_: `Paginator` will not allow simultaneous requests.  Requests incoming while `paginator.requestStatus` is `.InProgress` will be ignored.
