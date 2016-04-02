@@ -6,6 +6,8 @@
 //  Copyright © 2016 Christopher Simpson. All rights reserved.
 //
 
+import Foundation
+
 /**
  RequestStatus for Paginator
  

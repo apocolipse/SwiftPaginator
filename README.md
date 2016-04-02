@@ -3,11 +3,24 @@
 [![CocoaPods](https://img.shields.io/cocoapods/l/SwiftPaginator.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/p/SwiftPaginator.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/metrics/doc-percent/SwiftPaginator.svg)]()
+``` 🐧 Linux Ready ```
 
 
+
+![Paging](http://i.giphy.com/BWEY1LI6WdaN2.gif)
 
 SwiftPaginator is a block-based Swift class that helps manage paginated resources.
 Inspired by [NMPaginator](https://github.com/nmondollot/NMPaginator), an Obj-C class.  SwiftPaginator leverages blocks and generics so that subclassing and delegates aren't needed.
+
+### Features
+- [x] Written in Swift
+- [x] Uses Generics, No Subclassing required.
+- [x] Block based, no delegate required.
+- [x] 100% Test Coverage
+- [x] Fully Documented
+- [x] iOS | OSX | WatchOS | tvOS | Linux ready
+
+
 
 
 ## How to Install
@@ -54,6 +67,29 @@ let stringPaginator = Paginator<String>(pageSize: 2, fetchHandler: {
         self.presentFailureAlert()
     })
 ```
+
+##### Setting up in a View Controller
+Declare the property
+```swift
+class ViewController: UIViewController {
+    var stringPaginator: Paginator<String>?
+...
+```
+
+Be sure to call `fetchFirstPage()` in `viewDidLoad()`, use `fetchNextPage()` elsewhere when you need to load more results (i.e. when scrolling to the bottom of a scroll view or tapping a button)
+```swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+    stringPaginator = ...
+    stringPaginator.fetchFirstPage()
+}
+
+func loadMoreResults() {
+    stringPaginator.fetchNextPage()
+}
+```
+
+
 ### Fetch pages
 Use `fetchFirstPage()` or `fetchNextPage()` to invoke a fetch.  `fetchFirstPage()` calls `reset()` then `fetchNextPage()` internally.
 ```swift
@@ -88,13 +124,35 @@ paginator.failureHandler = ...
 #### fetchHandler - Required
 The `fetchHandler` block defines the behavior to fetch new pages.  It is called internally from `fetchNextPage()`.  
 _NOTE_: You Must call either `paginator.receivedResults(_:total:)` or `paginator.failed()` within the `fetchHandler`.
+```swift
+paginator.fetchHandler = {
+    (paginator, page, pageSize) in
+
+    APIClient.getResources() { (response, failure) in
+        if failure {
+            paginator.failed()
+        } else {
+            paginator.receivedResults(response.results, total: response.total)
+        }    
+    }
+}
+```
 
 #### resultsHandler - Required
 The `resultsHandler` allows you to handle batches of new results coming in.  
 Although it is required to be defined, it can be empty, i.e.
 ```swift
 ...
-resultsHandler: { _ in },
+resultsHandler: { (_, _) in },
+...
+```
+But usually will be used to notify the View Controller to update the UI
+```swift
+...
+resultsHandler: { (paginator, results) in
+    self.handleNewResults(results)
+    self.tableView.reloadData()
+},
 ...
 ```
 
@@ -102,6 +160,18 @@ _NOTE_: the `results` passed to the `resultsHandler` are the results for that sp
 
 #### resetHandler - Optional
 The `resetHandler` allows you to do things like updating the UI or other activities that must be done _after_ the data source has changed.  It is optional.
+```swift
+paginator.resetHandler = {
+    (paginator) in
+    self.tableView.reloadData()
+}
+```
 
 #### failureHandler - Optional
 The `failureHandler` allows you to react to failures separately from the `fetchHandler`.  It isn't required, but is a decent way to split logic of fetching and reacting to failures.
+```swift
+paginator.resetHandler = {
+    (paginator) in
+    self.presentFailedAlert()
+}
+```
