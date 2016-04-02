@@ -2,6 +2,7 @@
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftPaginator.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/l/SwiftPaginator.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/p/SwiftPaginator.svg)]()
+[![Travis branch](https://img.shields.io/travis/apocolipse/SwiftPaginator/master.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/metrics/doc-percent/SwiftPaginator.svg)]()
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ``` 🐧 Linux Ready ```
@@ -172,7 +173,7 @@ paginator.failureHandler = ...
 ```
 
 #### fetchHandler - Required
-The `fetchHandler` block defines the behavior to fetch new pages.  It is called internally from `fetchNextPage()`.  
+The `fetchHandler` block defines the behavior to fetch new pages.  It is called internally from `fetchNextPage()`.
 _NOTE_: You Must call either `paginator.receivedResults(_:total:)` or `paginator.failed()` within the `fetchHandler`.
 ```swift
 paginator.fetchHandler = {
@@ -183,13 +184,13 @@ paginator.fetchHandler = {
             paginator.failed()
         } else {
             paginator.receivedResults(response.results, total: response.total)
-        }    
+        }
     }
 }
 ```
 
 #### resultsHandler - Required
-The `resultsHandler` allows you to handle batches of new results coming in.  
+The `resultsHandler` allows you to handle batches of new results coming in.
 Although it is required to be defined, it can be empty, i.e.
 ```swift
 ...
