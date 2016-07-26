@@ -20,7 +20,7 @@
  - Done: All fetch calls have finished and data exists.
  */
 public enum RequestStatus {
-  case None, InProgress, Done
+  case none, inProgress, done
 }
 
 
@@ -45,7 +45,7 @@ public class Paginator<Element> {
    The requestStatus defines the current state of the paginator.  If .None, no pages have fetched.  
    If .InProgress, incoming `fetchNextPage()` calls are ignored.
    */
-  public private(set) var requestStatus: RequestStatus = .None
+  public private(set) var requestStatus: RequestStatus = .none
   
   /**
    All results in the order they were received.
@@ -129,7 +129,7 @@ public class Paginator<Element> {
    reachedLastPage: Bool - Boolean indicating all pages have been fetched
    */
   public var reachedLastPage: Bool {
-    if requestStatus == .None {
+    if requestStatus == .none {
       return false
     }
     let totalPages = ceil(Double(total) / Double(pageSize))
@@ -148,11 +148,11 @@ public class Paginator<Element> {
    Fetch the next page.  If no pages are present it will fetch the first page (called by `fetchFirstPage()`
    */
   public func fetchNextPage() {
-    if requestStatus == .InProgress {
+    if requestStatus == .inProgress {
       return
     }
     if !reachedLastPage {
-      requestStatus = .InProgress
+      requestStatus = .inProgress
       fetchHandler(paginator: self, page: page + 1, pageSize: pageSize)
     }
   }
@@ -164,11 +164,11 @@ public class Paginator<Element> {
    - parameter results: Array of elements fetched within the fetchHandler
    - parameter total:   Total number of elements the paginator will page over.
    */
-  public func receivedResults(results: [Element], total: Int) {
-    self.results.appendContentsOf(results)
+  public func receivedResults(_ results: [Element], total: Int) {
+    self.results.append(contentsOf: results)
     self.total = total
     page += 1
-    requestStatus = .Done
+    requestStatus = .done
     
     resultsHandler(self, results)
   }
@@ -178,7 +178,7 @@ public class Paginator<Element> {
    has failed.
    */
   public func failed() {
-    requestStatus = .Done
+    requestStatus = .done
     failureHandler?(self)
   }
   
