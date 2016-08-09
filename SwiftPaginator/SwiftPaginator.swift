@@ -129,7 +129,7 @@ public class Paginator<Element> {
    reachedLastPage: Bool - Boolean indicating all pages have been fetched
    */
   public var reachedLastPage: Bool {
-    if requestStatus == .None {
+    if requestStatus == .None || page == 0 {
       return false
     }
     let totalPages = ceil(Double(total) / Double(pageSize))
