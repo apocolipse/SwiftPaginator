@@ -41,7 +41,7 @@ public class Paginator<Element> {
   public var results: [Element] = []
   
   /// Fetch Handler Signature
-  public typealias FetchHandlerType   = (paginator: Paginator<Element>, page: Int, pageSize: Int) -> ()
+  public typealias FetchHandlerType   = (_ paginator: Paginator<Element>, _ page: Int, _ pageSize: Int) -> ()
 
   /// Results Handler Signature
   public typealias ResultsHandler = (Paginator, [Element]) -> ()
@@ -77,8 +77,8 @@ public class Paginator<Element> {
   /// - parameter resetHandler:   Callback for `reset()`, will be called after data has been reset, optional.
   /// - parameter failureHandler: Callback for `failure()`, will be called
   public init(pageSize: Int,
-              fetchHandler: FetchHandlerType,
-              resultsHandler: ResultsHandler,
+              fetchHandler: @escaping FetchHandlerType,
+              resultsHandler: @escaping ResultsHandler,
               resetHandler: ResetHandler? = nil,
               failureHandler: FailureHandler? = nil) {
     
@@ -126,7 +126,7 @@ public class Paginator<Element> {
     }
     if !reachedLastPage {
       requestStatus = .inProgress
-      fetchHandler(paginator: self, page: page + 1, pageSize: pageSize)
+      fetchHandler(self, page + 1, pageSize)
     }
   }
   
