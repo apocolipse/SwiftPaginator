@@ -64,9 +64,9 @@ class SwiftPaginatorTests: XCTestCase {
   }
   
   func testStatus() {
-    XCTAssertEqual(lipsumPaginator.requestStatus, RequestStatus.None, "Status Failed, should be None")
+    XCTAssertEqual(lipsumPaginator.requestStatus, RequestStatus.none, "Status Failed, should be None")
     lipsumPaginator.fetchNextPage()
-    XCTAssertEqual(lipsumPaginator.requestStatus, RequestStatus.Done, "Status Failed, should be Done")
+    XCTAssertEqual(lipsumPaginator.requestStatus, RequestStatus.done, "Status Failed, should be Done")
   }
   
 }
@@ -81,20 +81,17 @@ class SwiftPaginatorAsyncTests: XCTestCase {
     
     fetchCallCount = 0
     // set an expectation to fulfill
-    let asyncExpectation = expectationWithDescription("longRunningFunction")
+    let asyncExpectation = expectation(description: "longRunningFunction")
     
     lipsumPaginator = Paginator<String>(pageSize: 10, fetchHandler: {
       (paginator: Paginator, page: Int, pageSize: Int) in
       self.fetchCallCount += 1
       // async for 5 seconds
-      dispatch_after(dispatch_time( DISPATCH_TIME_NOW, Int64(5.0 * Double(NSEC_PER_SEC))),
-        dispatch_get_main_queue(), {
-          
+      DispatchQueue.main.after(when: DispatchTime.now() + .seconds(5)) {
           paginator.receivedResults(lipsum[page - 1], total: lipsum.flatMap({ $0 }).count)
           asyncExpectation.fulfill()
-      })
-      
-      }, resultsHandler: { (paginator, results) in })
+      }
+    }, resultsHandler: { (paginator, results) in })
   }
   
   override func tearDown() {
@@ -104,7 +101,7 @@ class SwiftPaginatorAsyncTests: XCTestCase {
   
   func testAsync() {
     self.lipsumPaginator.fetchNextPage()
-    self.waitForExpectationsWithTimeout(5.1) { error in
+    self.waitForExpectations(timeout: 5.1) { error in
       XCTAssertNil(error, "Something went Horribly Wrong!  \(error)")
       XCTAssertEqual(self.lipsumPaginator.results, lipsum[0], "Async Results failed, should only have 1st page")
     }
@@ -112,10 +109,10 @@ class SwiftPaginatorAsyncTests: XCTestCase {
 
   func testStatus() {
     self.lipsumPaginator.fetchNextPage()
-    XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.InProgress, "Async Results failed, status should be InProgress")
-    self.waitForExpectationsWithTimeout(5.1) { error in
+    XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.inProgress, "Async Results failed, status should be InProgress")
+    self.waitForExpectations(timeout: 5.1) { error in
       XCTAssertNil(error, "Something went Horribly Wrong!  \(error)")
-      XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.Done, "Async Results failed, status should be Done")
+      XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.done, "Async Results failed, status should be Done")
     }
   }
   
@@ -124,17 +121,17 @@ class SwiftPaginatorAsyncTests: XCTestCase {
     XCTAssertEqual(fetchCallCount, 1, "Fetch Call Count failed, should be 1")
 
     // verify in progress
-    XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.InProgress, "Async Results failed, status should be InProgress")
+    XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.inProgress, "Async Results failed, status should be InProgress")
 
     // call again, shouldn't increment the count
     self.lipsumPaginator.fetchNextPage()
     XCTAssertEqual(fetchCallCount, 1, "Fetch Call Count failed, should be 1")
     
-    self.waitForExpectationsWithTimeout(5.1) { error in
+    self.waitForExpectations(timeout: 5.1) { error in
       XCTAssertNil(error, "Something went Horribly Wrong!  \(error)")
       
       // verify done
-      XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.Done, "Async Results failed, status should be Done")
+      XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.done, "Async Results failed, status should be Done")
       
       // call again, should increment the count
       self.lipsumPaginator.fetchNextPage()
