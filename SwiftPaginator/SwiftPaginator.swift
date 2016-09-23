@@ -95,7 +95,7 @@ public class Paginator<Element> {
   private func setDefaultValues() {
     total = 0
     page = 0
-    requestStatus = .None
+    requestStatus = .none
     results = []
   }
   
