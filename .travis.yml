@@ -7,12 +7,15 @@ before_install:
 
 script:
   # Build framework Debug
-  - xctool clean build -project SwiftPaginator.xcodeproj -scheme SwiftPaginator -configuration Debug -sdk iphonesimulator
+  - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginator -configuration Debug -sdk iphonesimulator clean
+  - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginator -configuration Debug -sdk iphonesimulator build
 
   # Build framework Release
-  - xctool clean build -project SwiftPaginator.xcodeproj -scheme SwiftPaginator -configuration Release -sdk iphonesimulator
+  - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginator -configuration Release -sdk iphonesimulator clean
+  - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginator -configuration Release -sdk iphonesimulator build
 
   # Build Example Debug
-  - xctool clean build -project SwiftPaginator.xcodeproj -scheme SwiftPaginatorExample -configuration Debug -sdk iphonesimulator
+  - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginatorExample -configuration Debug -sdk iphonesimulator clean
+  - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginatorExample -configuration Debug -sdk iphonesimulator build
 
 
