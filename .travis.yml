@@ -1,10 +1,6 @@
 osx_image: xcode8
 language: objective-c
 
-before_install:
-  - brew update
-  - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
-
 script:
   # Build framework Debug
   - xcodebuild -project SwiftPaginator.xcodeproj -target SwiftPaginator -configuration Debug -sdk iphonesimulator clean
