@@ -124,8 +124,9 @@ public class Paginator<Element> {
     return page >= Int(totalPages)
   }
   
-  /// Have all results been fetched
+  /// Returns true if all results been fetched
   private var fetchedAllResults: Bool {
+    //This logic assumes the total will be set in the `receivedResults(_:total:)` method.
     if results.count >= total {
       return true
     }
