@@ -71,8 +71,8 @@ public class Paginator<Element> {
   /// fetchHandler fails to separate it from fetch logic.
   public var failureHandler: FailureHandler?
   
-  /// The completion handler is called after the paginator finishes it's call.  Here you can add functionality to handle data
-  /// after the paginator completes.
+  /// The completion handler is called after the paginator fetches all objects from all pages.  Here you can 
+  /// add functionality to handle data after all the objects have been received.  Called by `receivedResults(_:total:)`.
   public var completionHandler: CompletionHandler?
   
   /// Creates a Paginator
@@ -83,7 +83,7 @@ public class Paginator<Element> {
   /// - parameter resultsHandler:    Callback to handle new pages of resutls, required.
   /// - parameter resetHandler:      Callback for `reset()`, will be called after data has been reset, optional.
   /// - parameter failureHandler:    Callback for `failure()`, will be called
-  /// - parameter completionHandler: Callback for `failure()`, will be called
+  /// - parameter completionHandler: Callback for `completion()`, will be called
   public init(pageSize: Int,
               fetchHandler: @escaping FetchHandlerType,
               resultsHandler: @escaping ResultsHandler,
@@ -126,7 +126,7 @@ public class Paginator<Element> {
   
   /// Have all results been fetched
   private var fetchedAllResults: Bool {
-    if results.count == total {
+    if results.count >= total {
       return true
     }
     
