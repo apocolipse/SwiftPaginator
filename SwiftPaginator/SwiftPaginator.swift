@@ -23,7 +23,7 @@ public enum RequestStatus {
 
 
 public class Paginator<Element> {
-
+  
   /// Size of pages.
   public var pageSize = 0
   
@@ -42,16 +42,19 @@ public class Paginator<Element> {
   
   /// Fetch Handler Signature
   public typealias FetchHandlerType   = (_ paginator: Paginator<Element>, _ page: Int, _ pageSize: Int) -> ()
-
+  
   /// Results Handler Signature
   public typealias ResultsHandler = (Paginator, [Element]) -> ()
-
+  
   /// Reset Handler Signature
   public typealias ResetHandler   = (Paginator) -> ()
   
   /// Failure Handler Signature
   public typealias FailureHandler = (Paginator) -> ()
-
+  
+  /// Completion Handler Signature
+  public typealias CompletionHandler = (Paginator) -> ()
+  
   /// The fetchHandler is defined by the user, it defines the behaviour for how to fetch a given page.
   /// NOTE: `receivedResults(_:total:)` or `failed()` must be called within.
   public var fetchHandler: FetchHandlerType
@@ -63,32 +66,39 @@ public class Paginator<Element> {
   /// The resetHandler is called by `reset()`.  Here you can define a callback to be called after
   /// the paginator has been reset.
   public var resetHandler: ResetHandler?
-
+  
   /// The failureHandler is called by `failed()`.  Here you can define a callback to be called when the
   /// fetchHandler fails to separate it from fetch logic.
   public var failureHandler: FailureHandler?
   
+  /// The completion handler is called after the paginator finishes it's call.  Here you can add functionality to handle data
+  /// after the paginator completes.
+  public var completionHandler: CompletionHandler?
+  
   /// Creates a Paginator
   ///
-  /// - parameter pageSize:       Size of pages
-  /// - parameter fetchHandler:   Block to define fetch behaviour, required.
-  ///                             NOTE: `receivedResults(_:total:)` or `failed()` must be called within.
-  /// - parameter resultsHandler: Callback to handle new pages of resutls, required.
-  /// - parameter resetHandler:   Callback for `reset()`, will be called after data has been reset, optional.
-  /// - parameter failureHandler: Callback for `failure()`, will be called
+  /// - parameter pageSize:          Size of pages
+  /// - parameter fetchHandler:      Block to define fetch behaviour, required.
+  ///                                NOTE: `receivedResults(_:total:)` or `failed()` must be called within.
+  /// - parameter resultsHandler:    Callback to handle new pages of resutls, required.
+  /// - parameter resetHandler:      Callback for `reset()`, will be called after data has been reset, optional.
+  /// - parameter failureHandler:    Callback for `failure()`, will be called
+  /// - parameter completionHandler: Callback for `failure()`, will be called
   public init(pageSize: Int,
               fetchHandler: @escaping FetchHandlerType,
               resultsHandler: @escaping ResultsHandler,
               resetHandler: ResetHandler? = nil,
-              failureHandler: FailureHandler? = nil) {
+              failureHandler: FailureHandler? = nil,
+              completionHandler: CompletionHandler? = nil) {
     
     self.pageSize = pageSize
     self.fetchHandler = fetchHandler
     self.resultsHandler = resultsHandler
     self.failureHandler = failureHandler
     self.resetHandler = resetHandler
+    self.completionHandler = completionHandler
     self.setDefaultValues()
-
+    
   }
   
   ///Sets default values for total, page, and results.  Called by `reset()` and `init`
@@ -112,6 +122,15 @@ public class Paginator<Element> {
     }
     let totalPages = ceil(Double(total) / Double(pageSize))
     return page >= Int(totalPages)
+  }
+  
+  /// Have all results been fetched
+  private var fetchedAllResults: Bool {
+    if results.count == total {
+      return true
+    }
+    
+    return false
   }
   
   /// Fetch the first page.  If requestStatus is not .None, the paginator will be reset.
@@ -143,6 +162,10 @@ public class Paginator<Element> {
     requestStatus = .done
     
     resultsHandler(self, results)
+    
+    if fetchedAllResults {
+      self.completionHandler?(self)
+    }
   }
   
   /// Public method to be called within a `fetchHandler`.  Lets the paginator and any obervers know a fetch
@@ -151,5 +174,4 @@ public class Paginator<Element> {
     requestStatus = .done
     failureHandler?(self)
   }
-  
 }
